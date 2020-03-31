@@ -1,0 +1,4 @@
+Controller/UserController.class
+Model/User.class
+Repository/UserRepository.class
+View/MagicKudos.class

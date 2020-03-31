@@ -1,0 +1,97 @@
+Modelos das features:
+
+
+ - Criar Usuário
+
+    http://<domain>/magikudos/users
+
+    Usuário deve ter:
+
+    -name
+    -user
+    -id
+    -email
+    -password
+
+    *****************************************************************************************************************************
+        http verbo == post
+        No body é enviado todos os dados(name,user,email,password) e este é armazenado diretamente ao banco de dados.
+        No front pode conter um form que é preenchido(nome,user,email,password) e envia os dados ao pressionar um botão. Todos os campos são obrigatórios.
+        Retorna 201-Created e os dados contendo o id.
+    *****************************************************************************************************************************
+
+
+ - Criar Kudo
+
+    http://<domain>/magikudos/kudos
+
+    Kudo deve conter:
+
+    -id
+    -sender
+    -receiver
+    -message
+    -date
+    -layout (optional)
+    -stored = no
+
+    *****************************************************************************************************************************
+        http verbo == post
+        Mesma ideia do "Criar Usuário", um form no front que envia os dados(sender,receiver e message obrigatórios, e layout se houver) pelo body
+        da request, envia para o banco com a flag 'stored' com status no e retorna 201-Created e o dados contendo o id.
+    *****************************************************************************************************************************
+
+
+ - Listar Kudos (Todos)
+
+    http://<domain>/magikudos/kudos
+
+    *****************************************************************************************************************************
+        http verbo == get
+        Retorna todos os Kudos do banco que tem status 'stored' == no e se nao houver retorna 204-No Content
+
+        Padrão da mensagem
+
+        De: <Nome-remetente>
+        Para: <Nome-destinatario>
+        <mensagem>
+    *****************************************************************************************************************************
+
+
+- Listar Kudos (Único)
+
+    http://<domain>/magikudos/kudos/id
+
+    *****************************************************************************************************************************
+        http verbo == get
+        Retorna o Kudo do banco que tem status 'stored' == no e requestId == dataBaseId.
+        Se ninguem for compativel retornar 204-No Content
+
+        Padrão da mensagem
+
+        De: <Nome-remetente>
+        Para: <Nome-destinatario>
+        <mensagem>
+    *****************************************************************************************************************************
+
+
+- Arquivar Kudos(Todos)
+
+
+    http://<domain>/magikudos/kudos
+
+    *****************************************************************************************************************************
+        http verbo == put
+        Faz update no banco de dados de todos os Kudos dos quais 'stored' == no. Troca 'stored' para yes
+    *****************************************************************************************************************************
+
+
+- Arquivar Kudos(Único)
+
+
+    http://<domain>/magikudos/kudos/id
+
+    *****************************************************************************************************************************
+        http verbo == put
+        Faz update no banco de dados do Kudo que tiver  requestId == dataBaseId e 'stored' == no. Troca 'stored' para yes
+    *****************************************************************************************************************************
