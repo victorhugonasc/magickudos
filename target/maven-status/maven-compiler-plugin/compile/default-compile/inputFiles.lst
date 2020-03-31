@@ -1,4 +1,6 @@
-/home/victor/magickudos/src/main/java/Controller/UserController.java
-/home/victor/magickudos/src/main/java/Model/User.java
-/home/victor/magickudos/src/main/java/View/MagicKudos.java
-/home/victor/magickudos/src/main/java/Repository/UserRepository.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/Repository/UserRepository.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/Model/Kudo.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/View/MagicKudos.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/Controller/UserController.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/Controller/TestController.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/Model/User.java

@@ -1,4 +1,6 @@
+Controller/TestController.class
 Controller/UserController.class
+Model/Kudo.class
 Model/User.class
 Repository/UserRepository.class
 View/MagicKudos.class
