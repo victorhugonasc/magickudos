@@ -19,7 +19,7 @@ public class UserController {
         super();
     }
 
-    @PostMapping
+    @PostMapping()
     public void createUser(@RequestBody User user)
     {
         userRepository.save(new User(user.getName(),user.getUser(),user.getId(),user.getEmail(),user.getPassword()));
