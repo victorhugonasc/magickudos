@@ -4,10 +4,7 @@ package Controller;
 import Model.User;
 import Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,11 +20,10 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser()
+    public void createUser(@RequestBody User user)
     {
-        return new User("Victor","victorhugo","1","v@v.com","123456");
+        userRepository.save(new User(user.getName(),user.getUser(),user.getId(),user.getEmail(),user.getPassword()));
     }
-
     @GetMapping
     public List<User> getUsers()
     {
