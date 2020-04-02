@@ -1,7 +1,7 @@
-package Controller;
+package org.example.kudos.controller;
 
-import Model.Kudo;
-import Repository.KudoRepository;
+import org.example.kudos.model.Kudo;
+import org.example.kudos.repository.KudoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +22,12 @@ public class KudoController {
     }
 
       @PostMapping()
-    public void createKudo(@RequestBody Kudo kudo)
+    public Kudo createKudo(@RequestBody Kudo kudo)
     {
-       // kudoRepository.save(new Kudo(kudo.getId(),kudo.getSender(),kudo.getReceiver(),kudo.getMessage(),kudo.getDate(),kudo.getLayout()));
-        kudoList.add(new Kudo(kudo.getId(),kudo.getSender(),kudo.getReceiver(),kudo.getMessage(),kudo.getDate(),kudo.getLayout()));
+       kudoRepository.save(new Kudo(kudo.getId(),kudo.getSender(),kudo.getReceiver(),kudo.getMessage(),kudo.getDate(),kudo.getLayout()));
+       kudoList.add(kudo);
+       return kudo;
+
     }
 
 
@@ -35,11 +37,11 @@ public class KudoController {
         return kudoRepository.findAll();
     }
 
-    @GetMapping
-    public Kudo getSingleKudo(@RequestBody Kudo kudoRequest)
+    @GetMapping("/{id}")
+    public Kudo getSingleKudo(@PathVariable String id)
     {
         for (Kudo kudo: kudoList) {
-            if (kudoRequest.getId() == kudo.getId())
+            if (id.contentEquals(kudo.getId()))
             {
               return kudo;
             }
@@ -48,28 +50,30 @@ public class KudoController {
     }
 
     @PutMapping
-    public void storeKudos()
+    public List<Kudo> storeKudos()
     {
         for (Kudo kudo: kudoList) {
             kudo.setStored("yes");
         }
 
         kudoRepository.saveAll(kudoList);
+        return kudoList;
     }
 
-    @PutMapping
-    public void storeSingleKudo(@RequestBody Kudo kudoRequest)
+    @PutMapping("/{id}")
+    public Kudo storeSingleKudo(@PathVariable String id)
     {
 
         for (Kudo kudo: kudoList) {
-            if (kudoRequest.getId() == kudo.getId())
+            if (id.contentEquals(kudo.getId()))
             {
                 kudo.setStored("yes");
                 kudoRepository.save(kudo);
+                return kudo;
             }
         }
 
-
+        return null;
     }
 
 

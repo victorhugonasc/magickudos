@@ -1,4 +1,4 @@
-package Model;
+package org.example.kudos.model;
 
 
 import org.springframework.data.annotation.Id;

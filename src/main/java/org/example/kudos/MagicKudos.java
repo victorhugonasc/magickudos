@@ -1,4 +1,4 @@
-package View;
+package org.example.kudos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,4 @@ public class MagicKudos {
     public static void main(String[] args) {
         SpringApplication.run(MagicKudos.class, args);
     }
-
 }

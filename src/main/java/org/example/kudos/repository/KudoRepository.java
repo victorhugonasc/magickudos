@@ -1,6 +1,6 @@
-package Repository;
+package org.example.kudos.repository;
 
-import Model.Kudo;
+import org.example.kudos.model.Kudo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

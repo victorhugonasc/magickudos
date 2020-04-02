@@ -1,7 +1,7 @@
-package Repository;
+package org.example.kudos.repository;
 
 
-import Model.User;
+import org.example.kudos.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

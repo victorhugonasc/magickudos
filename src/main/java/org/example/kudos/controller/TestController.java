@@ -1,33 +1,34 @@
-package Controller;
+package org.example.kudos.controller;
 
-
-import Model.User;
-import Repository.UserRepository;
+import org.example.kudos.model.User;
+import org.example.kudos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/test")
+public class TestController {
 
     @Autowired
     private UserRepository userRepository;
 
-    public UserController() {
+    public TestController() {
         super();
     }
 
-    @PostMapping()
+    @PostMapping
     public void createUser(@RequestBody User user)
     {
         userRepository.save(new User(user.getName(),user.getUser(),user.getId(),user.getEmail(),user.getPassword()));
     }
+
     @GetMapping
     public List<User> getUsers()
     {
         return userRepository.findAll();
     }
+
 
 }
