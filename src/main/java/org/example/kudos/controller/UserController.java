@@ -6,9 +6,9 @@ import org.example.kudos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -20,7 +20,7 @@ public class UserController {
 
     public UserController() {
         super();
-    }
+     }
 
     @PostMapping()
     public User createUser(@RequestBody User user)
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/id")
-    public User getSingleUser(@PathVariable String id)
+    public User getSingleUser(@PathVariable String id, HttpServletResponse response)
     {
         for (User user : userList)
         {
@@ -45,8 +45,29 @@ public class UserController {
                 return user;
             }
         }
-
+        response.setStatus(204);
         return null;
     }
 
+    @DeleteMapping()
+    public void deleteAllUsers()
+    {
+        userRepository.deleteAll();
+        userList.clear();
+    }
+
+    @DeleteMapping("/id")
+    public void deleteSingleUser(@PathVariable String id, HttpServletResponse response)
+    {
+        for (User user : userList)
+        {
+            if (user.getId().contentEquals(id))
+            {
+                userRepository.delete(user);
+                userList.remove(user);
+                break;
+            }
+        }
+        response.setStatus(204);
+    }
 }
