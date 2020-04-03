@@ -21,9 +21,10 @@ public class UserController {
      }
 
     @PostMapping()
-    public User createUser(@RequestBody User user)
+    public User createUser(@RequestBody User user,HttpServletResponse response)
     {
         userRepository.save(new User(user.getName(),user.getUser(),user.getId(),user.getEmail(),user.getPassword()));
+        response.setStatus(201);
         return user;
     }
 
