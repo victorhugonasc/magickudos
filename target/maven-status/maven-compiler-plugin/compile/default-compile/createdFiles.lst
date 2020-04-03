@@ -1,6 +1,7 @@
-Controller/TestController.class
-Controller/UserController.class
-Model/Kudo.class
-Model/User.class
-Repository/UserRepository.class
-View/MagicKudos.class
+org/example/kudos/repository/UserRepository.class
+org/example/kudos/controller/KudoController.class
+org/example/kudos/controller/UserController.class
+org/example/kudos/repository/KudoRepository.class
+org/example/kudos/model/Kudo.class
+org/example/kudos/model/User.class
+org/example/kudos/MagicKudos.class

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,7 +14,6 @@ public class KudoController {
 
     @Autowired
     private KudoRepository kudoRepository;
-    private ArrayList<Kudo> kudoList= new ArrayList<>();
 
     public KudoController() {
         super();
@@ -25,11 +23,9 @@ public class KudoController {
     public Kudo createKudo(@RequestBody Kudo kudo)
     {
        kudoRepository.save(new Kudo(kudo.getId(),kudo.getSender(),kudo.getReceiver(),kudo.getMessage(),kudo.getDate(),kudo.getLayout()));
-       kudoList.add(kudo);
        return kudo;
 
     }
-
 
     @GetMapping
     public List<Kudo> getKudos()
@@ -37,65 +33,67 @@ public class KudoController {
         return kudoRepository.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}")
     public Kudo getSingleKudo(@PathVariable String id, HttpServletResponse response)
     {
-        for (Kudo kudo: kudoList) {
-            if (id.contentEquals(kudo.getId()))
-            {
-              return kudo;
-            }
+
+        if (kudoRepository.findById(id).isPresent())
+        {
+            return kudoRepository.findById(id).get();
         }
+
         response.setStatus(204);
         return null;
+
     }
 
     @PutMapping
     public List<Kudo> storeKudos()
     {
-        for (Kudo kudo: kudoList) {
+
+        for (int i = 0; i < kudoRepository.findAll().size(); i++)
+        {
+            Kudo kudo = kudoRepository.findAll().get(i);
             kudo.setStored("yes");
+            kudoRepository.save(kudo);
         }
 
-        kudoRepository.saveAll(kudoList);
-        return kudoList;
+        return kudoRepository.findAll();
     }
 
-    @PutMapping("/{id}")
+
+    @PutMapping(path = "/{id}")
     public Kudo storeSingleKudo(@PathVariable String id, HttpServletResponse response)
     {
 
-        for (Kudo kudo: kudoList) {
-            if (id.contentEquals(kudo.getId()))
-            {
-                kudo.setStored("yes");
-                kudoRepository.save(kudo);
-                return kudo;
-            }
+        if (kudoRepository.findById(id).isPresent()) {
+            Kudo kudo = kudoRepository.findById(id).get();
+            kudo.setStored("yes");
+            kudoRepository.save(kudo);
+            return kudo;
         }
+
         response.setStatus(204);
         return null;
+
     }
 
     @DeleteMapping()
     public void deleteAllUsers()
     {
         kudoRepository.deleteAll();
-        kudoList.clear();
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping(path = "/{id}")
     public void deleteSingleUser(@PathVariable String id, HttpServletResponse response)
     {
-        for (Kudo kudo : kudoList)
+
+        if (kudoRepository.findById(id).isPresent())
         {
-            if (kudo.getId().contentEquals(id))
-            {
-                kudoRepository.delete(kudo);
-                kudoList.remove(kudo);
-                break;
-            }
+            kudoRepository.deleteById(id);
+            return;
         }
+
         response.setStatus(204);
     }
 

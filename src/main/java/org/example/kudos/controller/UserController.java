@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,7 +15,6 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-    private ArrayList<User> userList= new ArrayList<>();
 
     public UserController() {
         super();
@@ -26,25 +24,24 @@ public class UserController {
     public User createUser(@RequestBody User user)
     {
         userRepository.save(new User(user.getName(),user.getUser(),user.getId(),user.getEmail(),user.getPassword()));
-        userList.add(user);
         return user;
     }
+
     @GetMapping
     public List<User> getUsers()
     {
         return userRepository.findAll();
     }
 
-    @GetMapping("/id")
+    @GetMapping(path = "/{id}")
     public User getSingleUser(@PathVariable String id, HttpServletResponse response)
     {
-        for (User user : userList)
+
+        if (userRepository.findById(id).isPresent())
         {
-            if (user.getId().contentEquals(id))
-            {
-                return user;
-            }
+            return userRepository.findById(id).get();
         }
+
         response.setStatus(204);
         return null;
     }
@@ -53,21 +50,18 @@ public class UserController {
     public void deleteAllUsers()
     {
         userRepository.deleteAll();
-        userList.clear();
     }
 
-    @DeleteMapping("/id")
-    public void deleteSingleUser(@PathVariable String id, HttpServletResponse response)
-    {
-        for (User user : userList)
+    @DeleteMapping(path = "/{id}")
+    public void deleteSingleUser(@PathVariable String id, HttpServletResponse response) {
+
+
+        if (userRepository.findById(id).isPresent())
         {
-            if (user.getId().contentEquals(id))
-            {
-                userRepository.delete(user);
-                userList.remove(user);
-                break;
-            }
+            userRepository.delete(userRepository.findById(id).get());
+            return;
         }
+
         response.setStatus(204);
     }
 }

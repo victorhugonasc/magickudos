@@ -1,6 +1,7 @@
-/home/victor/repositorios/btconference/magickudos/src/main/java/Repository/UserRepository.java
-/home/victor/repositorios/btconference/magickudos/src/main/java/Model/Kudo.java
-/home/victor/repositorios/btconference/magickudos/src/main/java/View/MagicKudos.java
-/home/victor/repositorios/btconference/magickudos/src/main/java/Controller/UserController.java
-/home/victor/repositorios/btconference/magickudos/src/main/java/Controller/TestController.java
-/home/victor/repositorios/btconference/magickudos/src/main/java/Model/User.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/org/example/kudos/repository/UserRepository.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/org/example/kudos/controller/UserController.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/org/example/kudos/MagicKudos.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/org/example/kudos/model/User.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/org/example/kudos/controller/KudoController.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/org/example/kudos/repository/KudoRepository.java
+/home/victor/repositorios/btconference/magickudos/src/main/java/org/example/kudos/model/Kudo.java
