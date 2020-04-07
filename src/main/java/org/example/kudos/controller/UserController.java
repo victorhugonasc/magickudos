@@ -63,6 +63,6 @@ public class UserController {
             return;
         }
 
-        response.setStatus(204);
+        response.setStatus(404);
     }
 }
