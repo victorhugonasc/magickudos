@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/kudos")
+@CrossOrigin (origins = "http://localhost:3000")
 public class KudoController {
 
     @Autowired
