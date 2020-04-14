@@ -13,18 +13,18 @@ public class Kudo {
     private String receiver;
     private String message;
     private Date date;
-    private int layout;
+    private String layout;
     private String stored;
 
 
-    public Kudo(String id, String sender, String receiver, String message, Date date, int layout) {
+    public Kudo(String id, String sender, String receiver, String message, String layout) {
         super();
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
-        this.date = date;
         this.layout = layout;
+        this.date = new Date();
         this.stored = "no";
     }
 
@@ -79,12 +79,12 @@ public class Kudo {
     }
 
 
-    public int getLayout() {
+    public String getLayout() {
         return layout;
     }
 
 
-    public void setLayout(int layout) {
+    public void setLayout(String layout) {
         this.layout = layout;
     }
 

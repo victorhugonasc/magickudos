@@ -23,7 +23,7 @@ public class KudoController {
       @PostMapping()
     public Kudo createKudo(@RequestBody Kudo kudo,HttpServletResponse response)
     {
-       kudoRepository.save(new Kudo(kudo.getId(),kudo.getSender(),kudo.getReceiver(),kudo.getMessage(),kudo.getDate(),kudo.getLayout()));
+       kudoRepository.save(new Kudo(kudo.getId(),kudo.getSender(),kudo.getReceiver(),kudo.getMessage(),kudo.getLayout()));
        response.setStatus(201);
        return kudo;
 
