@@ -1,5 +1,6 @@
 package org.example.kudos;
 
+import com.google.common.base.Predicates;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +23,7 @@ public class MagicKudos {
     public Docket swaggerConfiguration() {
         return  new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .paths(PathSelectors.ant("/**"))
-               // .paths(PathSelectors.ant("/kudos/*"))
+                .paths(Predicates.not(PathSelectors.regex("/error")))
                 .build()
                 .apiInfo(metaData());
     }
