@@ -26,7 +26,6 @@ public class KudoController {
        kudoRepository.save(new Kudo(kudo.getId(),kudo.getSender(),kudo.getReceiver(),kudo.getMessage(),kudo.getLayout()));
        response.setStatus(201);
        return kudo;
-
     }
 
     @GetMapping
