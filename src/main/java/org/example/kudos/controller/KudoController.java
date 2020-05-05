@@ -20,7 +20,7 @@ public class KudoController {
         super();
     }
 
-      @PostMapping()
+    @PostMapping()
     public Kudo createKudo(@RequestBody Kudo kudo,HttpServletResponse response)
     {
        kudoRepository.save(new Kudo(kudo.getId(),kudo.getSender(),kudo.getReceiver(),kudo.getMessage(),kudo.getLayout()));

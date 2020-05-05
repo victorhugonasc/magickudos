@@ -2,6 +2,7 @@ package org.example.kudos.model;
 
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class Kudo {
@@ -9,11 +10,19 @@ public class Kudo {
     @Id
     private String id;
 
+    @NotNull
     private String sender;
+
+    @NotNull
     private String receiver;
+
+    @NotNull
     private String message;
-    private Date date;
+
+    @NotNull
     private String layout;
+
+    private Date date;
     private String stored;
 
 

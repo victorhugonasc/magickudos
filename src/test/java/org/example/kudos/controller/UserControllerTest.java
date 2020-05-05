@@ -1,9 +1,8 @@
 package org.example.kudos.controller;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.kudos.model.Kudo;
-import org.example.kudos.repository.KudoRepository;
+import org.example.kudos.model.User;
+import org.example.kudos.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,15 +19,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-
-import static javafx.beans.binding.Bindings.when;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(PowerMockRunner.class)
-@WebMvcTest(controllers = KudoController.class)
-public class KudoControllerTest {
+@WebMvcTest(controllers = UserController.class)
+public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -36,46 +33,39 @@ public class KudoControllerTest {
     private ObjectMapper objectMapper;
 
     @Mock
-    private KudoRepository kudoRepository;
+    private UserRepository userRepository;
 
     @InjectMocks
-    KudoController kudoController;
+    UserController userController;
 
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(kudoController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
     }
 
     @Test
-    public void testCreateKudo() throws Exception {
-        //String id, String sender, String receiver, String message, String layout
-        Kudo kudoMock = new Kudo("9a99999a99aa999999999a9a", "victorTest", "testVictor", "ola, teste", "isso eh um teste");
+    public void testCreateUser() throws Exception {
+        //String name, String user,String id, String email, String password
+        User userMock = new User("testName", "testUser", "9a99999a99aa999999999a9a", "test@test", "this is a test");
         mockMvc.perform( MockMvcRequestBuilders.post("/kudos")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(kudoMock))
+                .content(objectMapper.writeValueAsString(userMock))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
     }
 
     @Test
-    public void testGetKudos() throws Exception {
-        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/kudos"))
+    public void testGetUsers() throws Exception {
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/users"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
         assertThat(!response.getContentAsString().isEmpty());
     }
 
     @Test
-    public void testStoreKudos() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/kudos"))
+    public void testDeleteUsers() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users"))
                 .andExpect(status().isOk());
     }
-
-    @Test
-    public void testDeleteKudos() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/kudos"))
-                .andExpect(status().isOk());
-    }
-
 
 }
