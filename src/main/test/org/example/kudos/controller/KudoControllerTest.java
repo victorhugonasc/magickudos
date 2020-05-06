@@ -3,14 +3,18 @@ package org.example.kudos.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.kudos.model.Kudo;
+import org.example.kudos.repository.KudoRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -19,21 +23,24 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@ExtendWith(SpringExtension.class)
-@SpringBootTest
-@WebMvcTest(controllers = KudoController.class)
+@WebMvcTest(KudoController.class)
+//@AutoConfigureRestDocs
+@RunWith(SpringRunner.class)
 public class KudoControllerTest {
 
     @Autowired
-    private MockMvc mockMvc = MockMvcBuilders.standaloneSetup().build();
+    private MockMvc mockMvc;// = MockMvcBuilders.standaloneSetup().build();
 
     @Autowired
     private ObjectMapper objectMapper;
 
+    @MockBean
+    private KudoRepository kudoRepository;
+
     @Test
     public void testCreateKudo() throws Exception {
         //String id, String sender, String receiver, String message, String layout
-        Kudo kudoMock = new Kudo("9a99999a99aa999999999a9a", "victorTest", "testVictor", "ola, teste", "isso eh um teste");
+        //Kudo kudoMock = new Kudo("9a99999a99aa999999999a9a", "victorTest", "testVictor", "ola, teste", "isso eh um teste");
         mockMvc.perform( MockMvcRequestBuilders.post("/kudos")
                 .contentType(MediaType.APPLICATION_JSON)
                 //.content(objectMapper.writeValueAsString(kudoMock))
@@ -43,7 +50,7 @@ public class KudoControllerTest {
 
     @Test
     public void testGetKudos() throws Exception {
-        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/kudos"))
+        MockHttpServletResponse response = this.mockMvc.perform(MockMvcRequestBuilders.get("/kudos"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
         assertThat(!response.getContentAsString().isEmpty());
@@ -51,13 +58,13 @@ public class KudoControllerTest {
 
     @Test
     public void testStoreKudos() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/kudos"))
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/kudos"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testDeleteKudos() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/kudos"))
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/kudos"))
                 .andExpect(status().isOk());
     }
 
