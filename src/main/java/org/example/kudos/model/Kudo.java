@@ -2,6 +2,7 @@ package org.example.kudos.model;
 
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -10,16 +11,16 @@ public class Kudo {
     @Id
     private String id;
 
-    @NotNull
+    @NotBlank()
     private String sender;
 
-    @NotNull
+    @NotBlank(message = "Receiver is mandatory")
     private String receiver;
 
-    @NotNull
+    @NotBlank(message = "Message is mandatory")
     private String message;
 
-    @NotNull
+    @NotBlank(message = "Layout is mandatory")
     private String layout;
 
     private Date date;

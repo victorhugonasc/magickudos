@@ -23,9 +23,16 @@ public class KudoController {
     @PostMapping()
     public Kudo createKudo(@RequestBody Kudo kudo,HttpServletResponse response)
     {
-       kudoRepository.save(new Kudo(kudo.getId(),kudo.getSender(),kudo.getReceiver(),kudo.getMessage(),kudo.getLayout()));
-       response.setStatus(201);
-       return kudo;
+        if (!kudo.getId().isEmpty() && !kudo.getSender().isEmpty() && !kudo.getReceiver().isEmpty() && !kudo.getMessage().isEmpty() && !kudo.getLayout().isEmpty()) {
+            kudoRepository.save(new Kudo(kudo.getId(),kudo.getSender(),kudo.getReceiver(),kudo.getMessage(),kudo.getLayout()));
+            response.setStatus(201);
+        }
+
+        else {
+            response.setStatus(400); //If at least one field is empty, return bad request
+        }
+
+        return kudo;
     }
 
     @GetMapping
