@@ -3,12 +3,22 @@ package org.example.kudos.model;
 
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.NotBlank;
+
 public class User {
-    private String name;
-    private String user;
     @Id
     private String id;
+
+    @NotBlank()
+    private String name;
+
+    @NotBlank()
+    private String user;
+
+    @NotBlank()
     private String email;
+
+    @NotBlank()
     private String password;
 
 

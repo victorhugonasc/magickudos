@@ -24,8 +24,16 @@ public class UserController {
     @PostMapping()
     public User createUser(@RequestBody User user,HttpServletResponse response)
     {
-        userRepository.save(new User(user.getName(),user.getUser(),user.getId(),user.getEmail(),user.getPassword()));
-        response.setStatus(201);
+
+        if (!user.getName().isEmpty() && !user.getUser().isEmpty() && !user.getId().isEmpty() && !user.getEmail().isEmpty() && !user.getPassword().isEmpty()) {
+            userRepository.save(new User(user.getName(),user.getUser(),user.getId(),user.getEmail(),user.getPassword()));
+            response.setStatus(201);
+        }
+
+        else {
+            response.setStatus(400); //If at least one field is empty, return bad request
+        }
+
         return user;
     }
 
