@@ -35,9 +35,6 @@ public class KudoControllerTest {
     @MockBean
     private KudoRepository kudoRepository;
 
-    LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
-  //  requestParams.add("id", "1");
-
     @Test
     public void testCreateKudo() throws Exception {
         final String ID = "9a99999a99aa999999999a9a";
@@ -165,7 +162,7 @@ public class KudoControllerTest {
     @Test
     public void testGetKudosWithParams() throws Exception {
         final String ID = "9a99999a99aa999999999a9a";
-        MockHttpServletResponse response = this.mockMvc.perform(MockMvcRequestBuilders.get("/kudos/{id}",ID))
+        MockHttpServletResponse response = this.mockMvc.perform(MockMvcRequestBuilders.get("/kudos").param("id",ID))
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
     }

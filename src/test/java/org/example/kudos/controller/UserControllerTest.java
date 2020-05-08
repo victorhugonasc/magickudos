@@ -161,8 +161,24 @@ public class UserControllerTest {
     }
 
     @Test
+    public void testGetUsersWithParams() throws Exception {
+        String ID = "9a99999a99aa999999999a9a";
+        MockHttpServletResponse response = this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{id}",ID))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+        assertThat(!response.getContentAsString().isEmpty());
+    }
+
+    @Test
     public void testDeleteUsers() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/users"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteUsersWithParams() throws Exception {
+        String ID = "9a99999a99aa999999999a9a";
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/users").param("id",ID))
                 .andExpect(status().isOk());
     }
 
