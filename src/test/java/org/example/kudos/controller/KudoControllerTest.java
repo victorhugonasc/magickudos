@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.util.LinkedMultiValueMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,6 +34,9 @@ public class KudoControllerTest {
 
     @MockBean
     private KudoRepository kudoRepository;
+
+    LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
+  //  requestParams.add("id", "1");
 
     @Test
     public void testCreateKudo() throws Exception {
@@ -159,14 +163,36 @@ public class KudoControllerTest {
     }
 
     @Test
+    public void testGetKudosWithParams() throws Exception {
+        final String ID = "9a99999a99aa999999999a9a";
+        MockHttpServletResponse response = this.mockMvc.perform(MockMvcRequestBuilders.get("/kudos/{id}",ID))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+    }
+
+    @Test
     public void testStoreKudos() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.put("/kudos"))
                 .andExpect(status().isOk());
     }
 
     @Test
+    public void testStoreKudosWithParams() throws Exception {
+        final String ID = "9a99999a99aa999999999a9a";
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/kudos/{id}",ID))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     public void testDeleteKudos() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/kudos"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteKudosWithParams() throws Exception {
+        final String ID = "9a99999a99aa999999999a9a";
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/kudos/{id}",ID))
                 .andExpect(status().isOk());
     }
 
