@@ -22,11 +22,11 @@ public class UserController {
      }
 
     @PostMapping()
-    public User createUser(@RequestBody User user,HttpServletResponse response)
+    public int createUser(@RequestBody User user,HttpServletResponse response)
     {
 
         if (!user.getName().isEmpty() && !user.getUser().isEmpty() && !user.getId().isEmpty() && !user.getEmail().isEmpty() && !user.getPassword().isEmpty()) {
-            userRepository.save(new User(user.getName(),user.getUser(),user.getId(),user.getEmail(),user.getPassword()));
+            userRepository.save(user);
             response.setStatus(201);
         }
 
@@ -34,7 +34,7 @@ public class UserController {
             response.setStatus(400); //If at least one field is empty, return bad request
         }
 
-        return user;
+        return response.getStatus();
     }
 
     @GetMapping

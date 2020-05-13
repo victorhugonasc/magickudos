@@ -27,16 +27,16 @@ public class KudoControllerUnitTest {
     @Mock
     private KudoRepository kudoRepository;
 
+    @Mock
+    HttpServletResponse response;
+
     private final String ID = "5ebaf6f31d4d0370446a39f6";
     private final String SENDER = "Sender";
     private final String RECEIVER = "Receiver";
     private final String MESSAGE = "Test";
     private final String LAYOUT = "123456";
-    private final int RESPONSE_CODE_OK = 201;
+    private final int RESPONSE_CODE_CREATED = 201;
     private final int RESPONSE_CODE_BAD_REQUEST = 400;
-
-    @Mock
-    HttpServletResponse response;
 
     @Test
     public void testCreateKudoIsSuccessful() {
@@ -47,12 +47,12 @@ public class KudoControllerUnitTest {
 
         kudoController.createKudo(kudo,response);
 
-       verify(response, times(1)).setStatus(eq(RESPONSE_CODE_OK));
+       verify(response, times(1)).setStatus(eq(RESPONSE_CODE_CREATED));
        verify(kudoRepository,times(1)).save(eq(kudo));
     }
 
     @Test
-    public void testCreateKudoIsFailure() {
+    public void testCreateKudoWithMissingParams() {
 
         Kudo kudo = new Kudo("","","","","");
 
