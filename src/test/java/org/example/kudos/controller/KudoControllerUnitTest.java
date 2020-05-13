@@ -3,13 +3,10 @@ package org.example.kudos.controller;
 import org.example.kudos.model.Kudo;
 import org.example.kudos.repository.KudoRepository;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,60 +21,96 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 public class KudoControllerUnitTest {
 
-    @Autowired
+    @InjectMocks
     private KudoController kudoController;
 
-    @MockBean
+    @Mock
     private KudoRepository kudoRepository;
+
+    private final String ID = "5ebaf6f31d4d0370446a39f6";
+    private final String SENDER = "Sender";
+    private final String RECEIVER = "Receiver";
+    private final String MESSAGE = "Test";
+    private final String LAYOUT = "123456";
+    private final int RESPONSE_CODE_OK = 201;
+    private final int RESPONSE_CODE_BAD_REQUEST = 400;
 
     @Mock
     HttpServletResponse response;
 
     @Test
-    public void testSaveKudos() {
-        Kudo kudoMock = mock(Kudo.class);
-        Kudo kudo = new Kudo("id","sender","receiver","message","layout");
-        when(kudoRepository.save(kudo)).thenReturn(kudoMock);
+    public void testCreateKudoIsSuccessful() {
 
-      //  verify(kudoMock,times(1));
+        Kudo kudo = new Kudo(ID,SENDER,RECEIVER,MESSAGE,LAYOUT);
 
+        when(kudoRepository.save(kudo)).thenReturn(mock(Kudo.class));
+
+        kudoController.createKudo(kudo,response);
+
+       verify(response, times(1)).setStatus(eq(RESPONSE_CODE_OK));
+       verify(kudoRepository,times(1)).save(eq(kudo));
+    }
+
+    @Test
+    public void testCreateKudoIsFailure() {
+
+        Kudo kudo = new Kudo("","","","","");
+
+        when(kudoRepository.save(kudo)).thenReturn(mock(Kudo.class));
+
+        kudoController.createKudo(kudo,response);
+
+        verify(response, times(1)).setStatus(eq(RESPONSE_CODE_BAD_REQUEST));
+        verify(kudoRepository,never()).save(eq(kudo));
     }
 
     @Test
     public void testGetKudos() {
-        when(kudoRepository.findAll()).thenReturn(Stream.of(new Kudo("id","sender","receiver","message","layout")).collect(Collectors.toList()));
+        when(kudoRepository.findAll()).thenReturn(Stream.of(new Kudo(ID,SENDER,RECEIVER,MESSAGE,LAYOUT)).collect(Collectors.toList()));
         assertEquals(1,kudoController.getKudos().size());
     }
 
     @Test
     public void testGetSingleKudo() {
-        Kudo kudoMock = mock(Kudo.class);
-        Kudo kudo = new Kudo("id","sender","receiver","message","layout");
-        //kudoRepository.findById(id).isPresent()
-        when(kudoRepository.findById("id").get()).thenReturn(kudoMock);
-
+        kudoController.getSingleKudo(ID,response);
+        verify(kudoRepository,times(1)).findById(ID);
     }
 
     @Test
-    public void testWhenGetSingleKudoReturnsNull() {
-        //Kudo kudoMock = mock(Kudo.class);
-        Kudo kudo = new Kudo("1L","sender","receiver","message","layout");
-        kudoRepository.save(kudo);
-        //when(kudoRepository.save(kudo)).thenReturn(kudoMock);
-        when(kudoRepository.findById("1L").get()).thenReturn(kudo);
-
+    public void testGettingNonExistingKudo() {
+        String FAKE_ID = "fake_id";
+        kudoController.getSingleKudo(FAKE_ID,response);
+        verify(kudoRepository,never()).findById(ID);
     }
-
 
     @Test
     public void testStoreKudos() {
-        Kudo kudo = new Kudo("id","sender","receiver","message","layout");
-        when(kudoRepository.save(kudo)).thenReturn(kudo);
-        int index = 0;
-       // when(kudoRepository.findAll().get()).thenReturn(Stream.of(new Kudo("id","sender","receiver","message","layout")).collect(Collectors.toList()));
-        when(kudoRepository.findAll().get(index)).thenReturn(kudo);
-        assertEquals(1,kudoController.getKudos().size());
+        // False positive
+        Kudo kudo = new Kudo(ID,SENDER,RECEIVER,MESSAGE,LAYOUT);
+        kudoRepository.save(kudo);
+        Stream.of(new Kudo(ID,SENDER,RECEIVER,MESSAGE,LAYOUT)).collect(Collectors.toList());
+        kudoController.storeKudos();
+        verify(kudoRepository,times(1)).save(kudo);
+       // assertEquals(1,kudoRepository.findAll().size());
     }
 
+    @Test
+    public void testDeleteKudos() {
+        kudoController.deleteAllKudos();
+        verify(kudoRepository,times(1)).deleteAll();
+    }
+
+    @Test
+    public void testDeleteSingleKudo() {
+        kudoController.deleteSingleKudo(ID,response);
+        verify(kudoRepository,times(1)).findById(ID);//deleteById
+    }
+
+    @Test
+    public void testDeleteNonExistingKudo() {
+        String FAKE_ID = "fake_id";
+        kudoController.deleteSingleKudo(FAKE_ID,response);
+        verify(kudoRepository,never()).findById(ID);//deleteById
+    }
 
 }

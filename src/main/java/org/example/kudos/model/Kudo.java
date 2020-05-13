@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 public class Kudo {
 
@@ -37,7 +38,6 @@ public class Kudo {
         this.date = new Date();
         this.stored = "no";
     }
-
 
     public String getId() {
         return id;

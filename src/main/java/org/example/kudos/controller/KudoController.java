@@ -21,10 +21,10 @@ public class KudoController {
     }
 
     @PostMapping()
-    public Kudo createKudo(@RequestBody Kudo kudo,HttpServletResponse response)
+    public int createKudo(@RequestBody Kudo kudo,HttpServletResponse response)
     {
-        if (!kudo.getId().isEmpty() && !kudo.getSender().isEmpty() && !kudo.getReceiver().isEmpty() && !kudo.getMessage().isEmpty() && !kudo.getLayout().isEmpty()) {
-            kudoRepository.save(new Kudo(kudo.getId(),kudo.getSender(),kudo.getReceiver(),kudo.getMessage(),kudo.getLayout()));
+        if ( !kudo.getSender().equalsIgnoreCase("") && !kudo.getReceiver().equalsIgnoreCase("")  && !kudo.getMessage().equalsIgnoreCase("") && !kudo.getLayout().equalsIgnoreCase("")) {
+            kudoRepository.save(kudo);
             response.setStatus(201);
         }
 
@@ -32,7 +32,7 @@ public class KudoController {
             response.setStatus(400); //If at least one field is empty, return bad request
         }
 
-        return kudo;
+        return response.getStatus();
     }
 
     @GetMapping
@@ -58,7 +58,6 @@ public class KudoController {
     @PutMapping
     public List<Kudo> storeKudos()
     {
-
         for (int i = 0; i < kudoRepository.findAll().size(); i++)
         {
             Kudo kudo = kudoRepository.findAll().get(i);
@@ -87,22 +86,27 @@ public class KudoController {
     }
 
     @DeleteMapping()
-    public void deleteAllUsers()
+    public void deleteAllKudos()
     {
         kudoRepository.deleteAll();
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteSingleUser(@PathVariable String id, HttpServletResponse response)
+    public int deleteSingleKudo(@PathVariable String id, HttpServletResponse response)
     {
 
         if (kudoRepository.findById(id).isPresent())
         {
             kudoRepository.deleteById(id);
-            return;
         }
 
-        response.setStatus(404);
+        else
+        {
+            response.setStatus(404);
+        }
+
+
+        return response.getStatus();
     }
 
 }
