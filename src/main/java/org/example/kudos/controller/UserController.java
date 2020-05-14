@@ -25,7 +25,7 @@ public class UserController {
     public int createUser(@RequestBody User user,HttpServletResponse response)
     {
 
-        if (!user.getName().isEmpty() && !user.getUser().isEmpty() && !user.getId().isEmpty() && !user.getEmail().isEmpty() && !user.getPassword().isEmpty()) {
+        if (user.getName() != null && user.getUser()!= null && user.getEmail()!= null && user.getPassword()!= null) {
             userRepository.save(user);
             response.setStatus(201);
         }

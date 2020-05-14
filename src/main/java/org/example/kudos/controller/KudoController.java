@@ -23,7 +23,7 @@ public class KudoController {
     @PostMapping()
     public int createKudo(@RequestBody Kudo kudo,HttpServletResponse response)
     {
-        if ( !kudo.getSender().equalsIgnoreCase("") && !kudo.getReceiver().equalsIgnoreCase("")  && !kudo.getMessage().equalsIgnoreCase("") && !kudo.getLayout().equalsIgnoreCase("")) {
+        if ( kudo.getSender()!= null && kudo.getReceiver()!= null && kudo.getMessage()!= null && kudo.getLayout()!= null) {
             kudoRepository.save(kudo);
             response.setStatus(201);
         }
