@@ -79,7 +79,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.example.kudos.MagicKudos</mainClass>
+                    <mainClass>org.example.kudos.MagicKudos</mainClass>
                 </configuration>
             </plugin>
         </plugins>
