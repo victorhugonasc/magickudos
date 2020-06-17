@@ -1,2 +1,2 @@
-spring.profiles: production
-spring.data.mongodb.uri: mongodb+srv://admin:admin@cluster0-6bfqm.mongodb.net/MagicKudosDb?retryWrites=true&w=majority
+
+spring.data.mongodb.uri: mongodb://heroku_xdktq9rb:1pk8jd36jeavi66soofprgk3q3@ds213612.mlab.com:13612/heroku_xdktq9rb?retryWrites=false
