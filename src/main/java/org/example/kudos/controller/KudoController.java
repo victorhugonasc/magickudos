@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/kudos")
-@CrossOrigin (origins = "http://localhost:3000")
+@CrossOrigin (origins = {"http://localhost:3000", "https://magickudos-frontend.herokuapp.com"})
 public class KudoController {
 
     @Autowired
