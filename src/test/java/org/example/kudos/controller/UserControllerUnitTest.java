@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,17 +34,17 @@ public class UserControllerUnitTest {
     HttpServletResponse response;
 
     private final String NAME = "Name";
-    private final String USER = "User";
     private final String ID = "5ebaf6f31d4d0370446a39f6";
     private final String EMAIL = "email@email";
     private final String PASSWORD = "pass123word";
+    private final ArrayList<String> TAGS = new ArrayList();
     private final int RESPONSE_CODE_CREATED = 201;
     private final int RESPONSE_CODE_BAD_REQUEST = 400;
 
     @Test
     public void testCreateUserIsSuccessful() {
 
-        User user = new User(NAME,USER,ID,EMAIL,PASSWORD);
+        User user = new User(NAME,ID,EMAIL,PASSWORD,TAGS);
 
         when(userRepository.save(user)).thenReturn(mock(User.class));
 
@@ -56,7 +57,7 @@ public class UserControllerUnitTest {
     @Test
     public void testCreateUserWithMissingParams() {
 
-        User user = new User("","","","","");
+        User user = new User("","","","",TAGS);
 
         when(userRepository.save(user)).thenReturn(mock(User.class));
 
@@ -68,7 +69,7 @@ public class UserControllerUnitTest {
 
     @Test
     public void testGetUsers() {
-        when(userRepository.findAll()).thenReturn(Stream.of(new User(NAME,USER,ID,EMAIL,PASSWORD)).collect(Collectors.toList()));
+        when(userRepository.findAll()).thenReturn(Stream.of(new User(NAME,ID,EMAIL,PASSWORD,TAGS)).collect(Collectors.toList()));
         assertEquals(1,userController.getUsers().size());
     }
 

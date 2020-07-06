@@ -24,8 +24,7 @@ public class UserController {
     @PostMapping()
     public int createUser(@RequestBody User user,HttpServletResponse response)
     {
-
-        if (user.getName() != null && user.getUser()!= null && user.getEmail()!= null && user.getPassword()!= null) {
+        if (user.getName() != null && user.getEmail()!= null && user.getPassword()!= null) {
             userRepository.save(user);
             response.setStatus(201);
         }
@@ -46,7 +45,6 @@ public class UserController {
     @GetMapping(path = "/{id}")
     public User getSingleUser(@PathVariable String id, HttpServletResponse response)
     {
-
         if (userRepository.findById(id).isPresent())
         {
             return userRepository.findById(id).get();
@@ -64,7 +62,6 @@ public class UserController {
 
     @DeleteMapping(path = "/{id}")
     public void deleteSingleUser(@PathVariable String id, HttpServletResponse response) {
-
 
         if (userRepository.findById(id).isPresent())
         {
