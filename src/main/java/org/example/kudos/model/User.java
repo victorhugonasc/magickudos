@@ -4,6 +4,7 @@ package org.example.kudos.model;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 
 public class User {
     @Id
@@ -13,22 +14,22 @@ public class User {
     private String name;
 
     @NotBlank()
-    private String user;
-
-    @NotBlank()
     private String email;
 
     @NotBlank()
     private String password;
 
+    @NotBlank()
+    private ArrayList tags;
 
-    public User(String name, String user, String id, String email, String password) {
+
+    public User(String name, String id, String email, String password, ArrayList tags) {
         super();
         this.name = name;
-        this.user = user;
         this.id = id;
         this.email = email;
         this.password = password;
+        this.tags = tags;
     }
 
     public String getName() {
@@ -36,12 +37,6 @@ public class User {
     }
     public void setName(String name) {
         this.name = name;
-    }
-    public String getUser() {
-        return user;
-    }
-    public void setUser(String user) {
-        this.user = user;
     }
     public String getId() {
         return id;
@@ -61,5 +56,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    public ArrayList getTags() { return tags; }
+    public void setTags(ArrayList tags) { this.tags = tags; }
 }
