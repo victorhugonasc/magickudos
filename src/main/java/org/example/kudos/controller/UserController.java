@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -52,6 +53,22 @@ public class UserController {
 
         response.setStatus(204);
         return null;
+    }
+
+    @PutMapping(path = "/{id}")
+    public int updateSingleUser(@PathVariable String id,@RequestBody User user, HttpServletResponse response)
+    {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (!userOptional.isPresent()) {
+            response.setStatus(204);
+        }
+
+        else{
+            user.setId(id);
+            userRepository.save(user);
+        }
+        return response.getStatus();
     }
 
     @DeleteMapping()
