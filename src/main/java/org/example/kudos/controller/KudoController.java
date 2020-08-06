@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/kudos")
@@ -68,21 +69,22 @@ public class KudoController {
         return kudoRepository.findAll();
     }
 
-
     @PutMapping(path = "/{id}")
-    public Kudo storeSingleKudo(@PathVariable String id, HttpServletResponse response)
+    public int updateSingleKudo(@PathVariable String id, @RequestBody Kudo kudo, HttpServletResponse response)
     {
+        Optional<Kudo> kudoOptional = kudoRepository.findById(id);
 
-        if (kudoRepository.findById(id).isPresent()) {
-            Kudo kudo = kudoRepository.findById(id).get();
-            kudo.setStored("yes");
-            kudoRepository.save(kudo);
-            return kudo;
+        if (!kudoOptional.isPresent()) {
+            response.setStatus(204);
         }
 
-        response.setStatus(404);
-        return null;
-
+        else{
+            kudo.setId(id);
+            kudo.setDate(kudoOptional.get().getDate());
+            kudo.setStored(kudoOptional.get().getStored());
+            kudoRepository.save(kudo);
+        }
+        return response.getStatus();
     }
 
     @DeleteMapping()
