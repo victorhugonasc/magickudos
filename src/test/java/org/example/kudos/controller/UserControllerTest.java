@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,23 +39,23 @@ public class UserControllerTest {
     @Test
     public void testCreateUser() throws Exception {
         final String NAME = "testName";
-        final String USER = "testUser";
         final String ID = "9a99999a99aa999999999a9a";
         final String EMAIL = "test@test";
         final String PASSWORD = "testPassword";
+        final ArrayList<String> TAGS = new ArrayList();
 
         //String name, String user, String id, String email, String password
-        User userMock = new User(NAME,USER,ID,EMAIL,PASSWORD);
+        User userMock = new User(NAME,ID,EMAIL,PASSWORD,TAGS);
 
         mockMvc.perform( MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userMock))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Is.is(NAME)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.user", Is.is(USER)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is(ID)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Is.is(EMAIL)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.password", Is.is(PASSWORD)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.tags", Is.is(TAGS)))
                 .andExpect(status().isCreated());
 
     }
@@ -61,47 +63,23 @@ public class UserControllerTest {
     @Test
     public void testCreateUserShouldFailWhenNameIsEmpty() throws Exception {
         final String NAME = "";
-        final String USER = "testUser";
         final String ID = "9a99999a99aa999999999a9a";
         final String EMAIL = "test@test";
         final String PASSWORD = "testPassword";
+        final ArrayList<String> TAGS = new ArrayList();
 
         //String name, String user, String id, String email, String password
-        User userMock = new User(NAME,USER,ID,EMAIL,PASSWORD);
+        User userMock = new User(NAME,ID,EMAIL,PASSWORD,TAGS);
 
         mockMvc.perform( MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userMock))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Is.is(NAME)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.user", Is.is(USER)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is(ID)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Is.is(EMAIL)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.password", Is.is(PASSWORD)))
-                .andExpect(status().isBadRequest());
-
-    }
-
-    @Test
-    public void testCreateUserShouldFailWhenUserIsEmpty() throws Exception {
-        final String NAME = "testName";
-        final String USER = "";
-        final String ID = "9a99999a99aa999999999a9a";
-        final String EMAIL = "test@test";
-        final String PASSWORD = "testPassword";
-
-        //String name, String user, String id, String email, String password
-        User userMock = new User(NAME,USER,ID,EMAIL,PASSWORD);
-
-        mockMvc.perform( MockMvcRequestBuilders.post("/users")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(userMock))
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Is.is(NAME)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.user", Is.is(USER)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is(ID)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email", Is.is(EMAIL)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.password", Is.is(PASSWORD)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.tags", Is.is(TAGS)))
                 .andExpect(status().isBadRequest());
 
     }
@@ -109,46 +87,46 @@ public class UserControllerTest {
     @Test
     public void testCreateUserShouldFailWhenEmailIsEmpty() throws Exception {
         final String NAME = "testName";
-        final String USER = "testUser";
         final String ID = "9a99999a99aa999999999a9a";
         final String EMAIL = "";
         final String PASSWORD = "testPassword";
+        final ArrayList<String> TAGS = new ArrayList();
 
         //String name, String user, String id, String email, String password
-        User userMock = new User(NAME,USER,ID,EMAIL,PASSWORD);
+        User userMock = new User(NAME,ID,EMAIL,PASSWORD,TAGS);
 
         mockMvc.perform( MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userMock))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Is.is(NAME)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.user", Is.is(USER)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is(ID)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Is.is(EMAIL)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.password", Is.is(PASSWORD)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.tags", Is.is(TAGS)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     public void testCreateUserShouldFailWhenPasswordIsEmpty() throws Exception {
         final String NAME = "testName";
-        final String USER = "testUser";
         final String ID = "9a99999a99aa999999999a9a";
         final String EMAIL = "test@test";
         final String PASSWORD = "";
+        final ArrayList<String> TAGS = new ArrayList();
 
         //String name, String user, String id, String email, String password
-        User userMock = new User(NAME,USER,ID,EMAIL,PASSWORD);
+        User userMock = new User(NAME,ID,EMAIL,PASSWORD,TAGS);
 
         mockMvc.perform( MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userMock))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Is.is(NAME)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.user", Is.is(USER)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is(ID)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Is.is(EMAIL)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.password", Is.is(PASSWORD)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.tags", Is.is(TAGS)))
                 .andExpect(status().isBadRequest());
     }
 

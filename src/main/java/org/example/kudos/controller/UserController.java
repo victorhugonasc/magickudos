@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -24,8 +25,7 @@ public class UserController {
     @PostMapping()
     public int createUser(@RequestBody User user,HttpServletResponse response)
     {
-
-        if (user.getName() != null && user.getUser()!= null && user.getEmail()!= null && user.getPassword()!= null) {
+        if (user.getName() != null && user.getEmail()!= null && user.getPassword()!= null) {
             userRepository.save(user);
             response.setStatus(201);
         }
@@ -46,7 +46,6 @@ public class UserController {
     @GetMapping(path = "/{id}")
     public User getSingleUser(@PathVariable String id, HttpServletResponse response)
     {
-
         if (userRepository.findById(id).isPresent())
         {
             return userRepository.findById(id).get();
@@ -54,6 +53,22 @@ public class UserController {
 
         response.setStatus(204);
         return null;
+    }
+
+    @PutMapping(path = "/{id}")
+    public int updateSingleUser(@PathVariable String id,@RequestBody User user, HttpServletResponse response)
+    {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (!userOptional.isPresent()) {
+            response.setStatus(204);
+        }
+
+        else{
+            user.setId(id);
+            userRepository.save(user);
+        }
+        return response.getStatus();
     }
 
     @DeleteMapping()
@@ -64,7 +79,6 @@ public class UserController {
 
     @DeleteMapping(path = "/{id}")
     public void deleteSingleUser(@PathVariable String id, HttpServletResponse response) {
-
 
         if (userRepository.findById(id).isPresent())
         {
