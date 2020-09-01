@@ -29,11 +29,9 @@ public class UserController {
             userRepository.save(user);
             response.setStatus(201);
         }
-
         else {
             response.setStatus(400); //If at least one field is empty, return bad request
         }
-
         return response.getStatus();
     }
 
@@ -50,7 +48,6 @@ public class UserController {
         {
             return userRepository.findById(id).get();
         }
-
         response.setStatus(204);
         return null;
     }
@@ -59,11 +56,9 @@ public class UserController {
     public int updateSingleUser(@PathVariable String id,@RequestBody User user, HttpServletResponse response)
     {
         Optional<User> userOptional = userRepository.findById(id);
-
         if (!userOptional.isPresent()) {
             response.setStatus(204);
         }
-
         else{
             user.setId(id);
             userRepository.save(user);
@@ -79,13 +74,11 @@ public class UserController {
 
     @DeleteMapping(path = "/{id}")
     public void deleteSingleUser(@PathVariable String id, HttpServletResponse response) {
-
         if (userRepository.findById(id).isPresent())
         {
             userRepository.delete(userRepository.findById(id).get());
             return;
         }
-
         response.setStatus(404);
     }
 }
