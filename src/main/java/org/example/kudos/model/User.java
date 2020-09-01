@@ -14,6 +14,9 @@ public class User {
     private String name;
 
     @NotBlank()
+    private String team;
+
+    @NotBlank()
     private String email;
 
     @NotBlank()
@@ -23,10 +26,11 @@ public class User {
     private ArrayList tags;
 
 
-    public User(String name, String id, String email, String password, ArrayList tags) {
+    public User(String name, String id, String team, String email, String password, ArrayList tags) {
         super();
         this.name = name;
         this.id = id;
+        this.team = team;
         this.email = email;
         this.password = password;
         this.tags = tags;
@@ -47,6 +51,8 @@ public class User {
     public String getEmail() {
         return email;
     }
+    public String getTeam() { return team; }
+    public void setTeam(String team) { this.team = team; }
     public void setEmail(String email) {
         this.email = email;
     }
