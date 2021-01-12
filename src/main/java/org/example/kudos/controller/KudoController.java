@@ -45,15 +45,12 @@ public class KudoController {
     @GetMapping(path = "/{id}")
     public Kudo getSingleKudo(@PathVariable String id, HttpServletResponse response)
     {
-
         if (kudoRepository.findById(id).isPresent())
         {
             return kudoRepository.findById(id).get();
         }
-
         response.setStatus(204);
         return null;
-
     }
 
     @PutMapping
@@ -96,18 +93,12 @@ public class KudoController {
     @DeleteMapping(path = "/{id}")
     public int deleteSingleKudo(@PathVariable String id, HttpServletResponse response)
     {
-
         if (kudoRepository.findById(id).isPresent())
         {
             kudoRepository.deleteById(id);
         }
 
-        else
-        {
-            response.setStatus(404);
-        }
-
-
+        else {response.setStatus(404);}
         return response.getStatus();
     }
 

@@ -35,6 +35,7 @@ public class UserControllerUnitTest {
 
     private final String NAME = "Name";
     private final String ID = "5ebaf6f31d4d0370446a39f6";
+    private final String TEAM = "customersApp";
     private final String EMAIL = "email@email";
     private final String PASSWORD = "pass123word";
     private final ArrayList<String> TAGS = new ArrayList();
@@ -44,7 +45,7 @@ public class UserControllerUnitTest {
     @Test
     public void testCreateUserIsSuccessful() {
 
-        User user = new User(NAME,ID,EMAIL,PASSWORD,TAGS);
+        User user = new User(NAME,ID,TEAM,EMAIL,PASSWORD,TAGS);
 
         when(userRepository.save(user)).thenReturn(mock(User.class));
 
@@ -57,7 +58,7 @@ public class UserControllerUnitTest {
     @Test
     public void testCreateUserWithMissingParams() {
 
-        User user = new User("","","","",TAGS);
+        User user = new User("","","","","",TAGS);
 
         when(userRepository.save(user)).thenReturn(mock(User.class));
 
@@ -69,7 +70,7 @@ public class UserControllerUnitTest {
 
     @Test
     public void testGetUsers() {
-        when(userRepository.findAll()).thenReturn(Stream.of(new User(NAME,ID,EMAIL,PASSWORD,TAGS)).collect(Collectors.toList()));
+        when(userRepository.findAll()).thenReturn(Stream.of(new User(NAME,ID,TEAM,EMAIL,PASSWORD,TAGS)).collect(Collectors.toList()));
         assertEquals(1,userController.getUsers().size());
     }
 

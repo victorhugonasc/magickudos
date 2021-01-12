@@ -40,12 +40,13 @@ public class UserControllerTest {
     public void testCreateUser() throws Exception {
         final String NAME = "testName";
         final String ID = "9a99999a99aa999999999a9a";
+        final String TEAM = "customersApp";
         final String EMAIL = "test@test";
         final String PASSWORD = "testPassword";
         final ArrayList<String> TAGS = new ArrayList();
 
         //String name, String user, String id, String email, String password
-        User userMock = new User(NAME,ID,EMAIL,PASSWORD,TAGS);
+        User userMock = new User(NAME,ID,TEAM,EMAIL,PASSWORD,TAGS);
 
         mockMvc.perform( MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -64,12 +65,13 @@ public class UserControllerTest {
     public void testCreateUserShouldFailWhenNameIsEmpty() throws Exception {
         final String NAME = "";
         final String ID = "9a99999a99aa999999999a9a";
+        final String TEAM = "customersApp";
         final String EMAIL = "test@test";
         final String PASSWORD = "testPassword";
         final ArrayList<String> TAGS = new ArrayList();
 
         //String name, String user, String id, String email, String password
-        User userMock = new User(NAME,ID,EMAIL,PASSWORD,TAGS);
+        User userMock = new User(NAME,ID,TEAM,EMAIL,PASSWORD,TAGS);
 
         mockMvc.perform( MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -88,12 +90,13 @@ public class UserControllerTest {
     public void testCreateUserShouldFailWhenEmailIsEmpty() throws Exception {
         final String NAME = "testName";
         final String ID = "9a99999a99aa999999999a9a";
+        final String TEAM = "customersApp";
         final String EMAIL = "";
         final String PASSWORD = "testPassword";
         final ArrayList<String> TAGS = new ArrayList();
 
         //String name, String user, String id, String email, String password
-        User userMock = new User(NAME,ID,EMAIL,PASSWORD,TAGS);
+        User userMock = new User(NAME,ID,TEAM,EMAIL,PASSWORD,TAGS);
 
         mockMvc.perform( MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -111,12 +114,13 @@ public class UserControllerTest {
     public void testCreateUserShouldFailWhenPasswordIsEmpty() throws Exception {
         final String NAME = "testName";
         final String ID = "9a99999a99aa999999999a9a";
+        final String TEAM = "customersApp";
         final String EMAIL = "test@test";
         final String PASSWORD = "";
         final ArrayList<String> TAGS = new ArrayList();
 
         //String name, String user, String id, String email, String password
-        User userMock = new User(NAME,ID,EMAIL,PASSWORD,TAGS);
+        User userMock = new User(NAME,ID,TEAM,EMAIL,PASSWORD,TAGS);
 
         mockMvc.perform( MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
