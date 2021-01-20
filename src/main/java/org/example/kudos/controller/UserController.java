@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public class UserController {
     @PostMapping()
     public int createUser(@RequestBody User user,HttpServletResponse response)
     {
-        if (user.getName() != null && user.getEmail()!= null && user.getPassword()!= null) {
+        if (user.getName() != null) {
             userRepository.save(user);
             response.setStatus(201);
         }
@@ -53,14 +54,24 @@ public class UserController {
     }
 
     @PutMapping(path = "/{id}")
-    public int updateSingleUser(@PathVariable String id,@RequestBody User user, HttpServletResponse response)
+    public int addNicknameInSpecificUser(@PathVariable String id,@RequestBody String nickname, HttpServletResponse response)
     {
         Optional<User> userOptional = userRepository.findById(id);
         if (!userOptional.isPresent()) {
             response.setStatus(204);
         }
         else{
-            user.setId(id);
+            User user = userOptional.get();
+            ArrayList<String> newNickname = user.getNicknames();
+            if (newNickname == null) {
+                ArrayList<String> firstNickname = new ArrayList();
+                firstNickname.add(nickname);
+                user.setNicknames(firstNickname);
+            }
+            else {
+                newNickname.add(nickname);
+                user.setNicknames(newNickname);
+            }
             userRepository.save(user);
         }
         return response.getStatus();

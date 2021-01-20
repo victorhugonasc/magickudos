@@ -14,33 +14,15 @@ public class User {
     private String name;
 
     @NotBlank()
-    private String team;
+    private ArrayList<String> team;
 
-    @NotBlank()
-    private String email;
+    private ArrayList<String> nicknames;
 
-    @NotBlank()
-    private String password;
-
-    @NotBlank()
-    private ArrayList tags;
-
-
-    public User(String name, String id, String team, String email, String password, ArrayList tags) {
-        super();
-        this.name = name;
+    public User(String id, @NotBlank() String name, @NotBlank() ArrayList<String> team, ArrayList<String> nicknames) {
         this.id = id;
-        this.team = team;
-        this.email = email;
-        this.password = password;
-        this.tags = tags;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
         this.name = name;
+        this.team = team;
+        this.nicknames = nicknames;
     }
     public String getId() {
         return id;
@@ -48,20 +30,14 @@ public class User {
     public void setId(String id) {
         this.id = id;
     }
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
-    public String getTeam() { return team; }
-    public void setTeam(String team) { this.team = team; }
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public ArrayList getTags() { return tags; }
-    public void setTags(ArrayList tags) { this.tags = tags; }
+    public ArrayList<String> getTeam() { return team; }
+    public void setTeam(ArrayList<String> team) { this.team = team; }
+    public ArrayList<String> getNicknames() { return nicknames; }
+    public void setNicknames(ArrayList<String> nicknames) { this.nicknames = nicknames; }
 }

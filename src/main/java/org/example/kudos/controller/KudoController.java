@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/kudos")
@@ -39,7 +40,27 @@ public class KudoController {
     @GetMapping
     public List<Kudo> getKudos()
     {
-        return kudoRepository.findAll();
+        List<Kudo> kudos = kudoRepository.findAll();
+
+        List<Kudo> filteredKudos = kudos
+                .stream()
+                .filter(kudo -> kudo.getStored().contentEquals("no"))
+                .collect(Collectors.toList());
+
+        return filteredKudos;
+    }
+
+    @GetMapping(path = "/all")
+    public List<Kudo> getAllKudos()
+    {
+        List<Kudo> kudos = kudoRepository.findAll();
+
+        List<Kudo> filteredKudos = kudos
+                .stream()
+                .filter(kudo -> kudo.getStored().contentEquals("yes"))
+                .collect(Collectors.toList());
+
+        return filteredKudos;
     }
 
     @GetMapping(path = "/{id}")
