@@ -42,10 +42,10 @@ public class KudoController {
     {
         List<Kudo> kudos = kudoRepository.findAll();
 
-        List<Kudo> filteredKudos = kudos
-                .stream()
-                .filter(kudo -> kudo.getStored().contentEquals("no"))
-                .collect(Collectors.toList());
+        List<Kudo> filteredKudos = kudos;
+                //.stream()
+                //.filter(kudo -> kudo.getStored().contentEquals("no"))
+                //.collect(Collectors.toList());
 
         return filteredKudos;
     }
