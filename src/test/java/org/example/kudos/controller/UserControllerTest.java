@@ -1,4 +1,4 @@
-package org.example.kudos.controller;
+/*package org.example.kudos.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.kudos.model.User;
@@ -165,4 +165,4 @@ public class UserControllerTest {
     }
 
 
-}
+}*/

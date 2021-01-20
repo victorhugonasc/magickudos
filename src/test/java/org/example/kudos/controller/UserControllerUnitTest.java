@@ -1,4 +1,4 @@
-package org.example.kudos.controller;
+/*package org.example.kudos.controller;
 
 import org.example.kudos.model.User;
 import org.example.kudos.repository.UserRepository;
@@ -106,4 +106,4 @@ public class UserControllerUnitTest {
         verify(userRepository,never()).findById(ID);//deleteById
     }
 
-}
+}*/
