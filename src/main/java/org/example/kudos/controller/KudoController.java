@@ -50,6 +50,19 @@ public class KudoController {
         return filteredKudos;
     }
 
+    @GetMapping(path = "/all")
+    public List<Kudo> getAllKudos()
+    {
+        List<Kudo> kudos = kudoRepository.findAll();
+
+        List<Kudo> filteredKudos = kudos
+                .stream()
+                .filter(kudo -> kudo.getStored().contentEquals("yes"))
+                .collect(Collectors.toList());
+
+        return filteredKudos;
+    }
+
     @GetMapping(path = "/{id}")
     public Kudo getSingleKudo(@PathVariable String id, HttpServletResponse response)
     {
