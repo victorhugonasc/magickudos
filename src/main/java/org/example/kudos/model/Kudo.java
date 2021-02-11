@@ -23,7 +23,8 @@ public class Kudo {
     private String layout;
 
     private Date date;
-    private String stored;
+    private String olderKudo;
+    private boolean assigned;
 
     public Kudo(String id, String sender, String receiver, String message, String layout) {
         super();
@@ -32,21 +33,24 @@ public class Kudo {
         this.receiver = receiver;
         this.message = message;
         this.layout = layout;
-        this.stored = "no";
+        this.olderKudo = "no";
+        this.assigned = false;
     }
 
-    public String getId() {return id;}
-    public void setId(String id) {this.id = id;}
-    public String getSender() {return sender;}
-    public void setSender(String sender) {this.sender = sender;}
-    public String getReceiver() {return receiver;}
-    public void setReceiver(String receiver) {this.receiver = receiver;}
-    public String getMessage() {return message;}
-    public void setMessage(String message) {this.message = message;}
-    public Date getDate() {return date;}
-    public void setDate(Date date) {this.date = date;}
-    public String getLayout() {return layout;}
-    public void setLayout(String layout) {this.layout = layout;}
-    public String getStored() {return stored;}
-    public void setStored(String stored) {this.stored = stored;}
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+    public String getSender() { return sender; }
+    public void setSender(String sender) { this.sender = sender; }
+    public String getReceiver() { return receiver; }
+    public void setReceiver(String receiver) { this.receiver = receiver; }
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
+    public Date getDate() { return date; }
+    public void setDate(Date date) { this.date = date; }
+    public String getLayout() { return layout; }
+    public void setLayout(String layout) { this.layout = layout; }
+    public String getOlderKudo() { return olderKudo; }
+    public void setOlderKudo(String olderKudo) { this.olderKudo = olderKudo; }
+    public boolean isAssigned() { return assigned; }
+    public void setAssigned(boolean assigned) { this.assigned = assigned; }
 }

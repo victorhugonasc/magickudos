@@ -17,13 +17,16 @@ public class User {
     private ArrayList<String> team;
 
     private ArrayList<String> nicknames;
+    private boolean hiddenPerson;
 
     public User(String id, @NotBlank() String name, @NotBlank() ArrayList<String> team, ArrayList<String> nicknames) {
         this.id = id;
         this.name = name;
         this.team = team;
         this.nicknames = nicknames;
+        this.hiddenPerson = false;
     }
+
     public String getId() {
         return id;
     }
@@ -40,4 +43,6 @@ public class User {
     public void setTeam(ArrayList<String> team) { this.team = team; }
     public ArrayList<String> getNicknames() { return nicknames; }
     public void setNicknames(ArrayList<String> nicknames) { this.nicknames = nicknames; }
+    public boolean isHiddenPerson() { return hiddenPerson; }
+    public void setHiddenPerson(boolean hiddenPerson) { this.hiddenPerson = hiddenPerson; }
 }
