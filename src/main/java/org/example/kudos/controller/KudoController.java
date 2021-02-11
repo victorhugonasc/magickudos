@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +29,8 @@ public class KudoController {
     public int createKudo(@RequestBody Kudo kudo,HttpServletResponse response)
     {
         if ( kudo.getSender()!= null && kudo.getReceiver()!= null && kudo.getMessage()!= null && kudo.getLayout()!= null) {
+            Date currentDate = new Date();
+            kudo.setDate(currentDate);
             kudoRepository.save(kudo);
             response.setStatus(201);
         }
@@ -42,10 +47,10 @@ public class KudoController {
     {
         List<Kudo> kudos = kudoRepository.findAll();
 
-        List<Kudo> filteredKudos = kudos;
-                //.stream()
-                //.filter(kudo -> kudo.getStored().contentEquals("no"))
-                //.collect(Collectors.toList());
+        List<Kudo> filteredKudos = kudos
+                .stream()
+                .filter(kudo -> kudo.getOlderKudo().contentEquals("no"))
+                .collect(Collectors.toList());
 
         return filteredKudos;
     }
@@ -57,7 +62,20 @@ public class KudoController {
 
         List<Kudo> filteredKudos = kudos
                 .stream()
-                .filter(kudo -> kudo.getStored().contentEquals("yes"))
+                .filter(kudo -> kudo.getOlderKudo().contentEquals("yes"))
+                .collect(Collectors.toList());
+
+        return filteredKudos;
+    }
+
+    @GetMapping(path = "/unassigned")
+    public List<Kudo> getAllKudosUnassigned()
+    {
+        List<Kudo> kudos = kudoRepository.findAll();
+
+        List<Kudo> filteredKudos = kudos
+                .stream()
+                .filter(kudo -> !kudo.isAssigned())
                 .collect(Collectors.toList());
 
         return filteredKudos;
@@ -80,7 +98,7 @@ public class KudoController {
         for (int i = 0; i < kudoRepository.findAll().size(); i++)
         {
             Kudo kudo = kudoRepository.findAll().get(i);
-            kudo.setStored("yes");
+            kudo.setOlderKudo("yes");
             kudoRepository.save(kudo);
         }
 
@@ -88,8 +106,7 @@ public class KudoController {
     }
 
     @PutMapping(path = "/{id}")
-    public int updateSingleKudo(@PathVariable String id, @RequestBody Kudo kudo, HttpServletResponse response)
-    {
+    public int updateSingleKudo(@PathVariable String id, @RequestBody Kudo kudo, HttpServletResponse response) throws ParseException {
         Optional<Kudo> kudoOptional = kudoRepository.findById(id);
 
         if (!kudoOptional.isPresent()) {
@@ -97,10 +114,41 @@ public class KudoController {
         }
 
         else{
-            kudo.setId(id);
-            kudo.setDate(kudoOptional.get().getDate());
-            kudo.setStored(kudoOptional.get().getStored());
-            kudoRepository.save(kudo);
+
+            Kudo updatedKudo = kudoOptional.get();
+
+            if (kudo.getSender() != null) {
+                updatedKudo.setSender(kudo.getSender());
+            }
+
+            if (kudo.getReceiver() != null) {
+                updatedKudo.setReceiver(kudo.getReceiver());
+            }
+
+            if (kudo.getMessage() != null) {
+                updatedKudo.setMessage(kudo.getMessage());
+            }
+
+            if (kudo.getLayout() != null) {
+                updatedKudo.setLayout(kudo.getLayout());
+            }
+
+            if (kudo.getDate() == null) {
+                updatedKudo.setDate(kudo.getDate());
+            }
+
+            else {
+                String dateInString = "1996-01-05 16:22:29";
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date = formatter.parse(dateInString);
+                updatedKudo.setDate(date);
+            }
+
+            if (kudo.getOlderKudo() != null) {
+                updatedKudo.setOlderKudo(kudo.getOlderKudo());
+            }
+
+            kudoRepository.save(updatedKudo);
         }
         return response.getStatus();
     }
@@ -118,7 +166,6 @@ public class KudoController {
         {
             kudoRepository.deleteById(id);
         }
-
         else {response.setStatus(404);}
         return response.getStatus();
     }

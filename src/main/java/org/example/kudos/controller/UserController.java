@@ -77,6 +77,21 @@ public class UserController {
         return response.getStatus();
     }
 
+    @PutMapping(path = "/hideUser/{id}")
+    public int hideUser(@PathVariable String id, HttpServletResponse response)
+    {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (!userOptional.isPresent()) {
+            response.setStatus(204);
+        }
+        else{
+            User user = userOptional.get();
+            user.setHiddenPerson(true);
+            userRepository.save(user);
+        }
+        return response.getStatus();
+    }
+
     @DeleteMapping()
     public void deleteAllUsers()
     {
