@@ -32,7 +32,6 @@ public class Kudo {
         this.receiver = receiver;
         this.message = message;
         this.layout = layout;
-        this.date = new Date();
         this.stored = "no";
     }
 
