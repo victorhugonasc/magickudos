@@ -137,13 +137,6 @@ public class KudoController {
                 updatedKudo.setDate(kudo.getDate());
             }
 
-            else {
-                String dateInString = "1996-01-05 16:22:29";
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date date = formatter.parse(dateInString);
-                updatedKudo.setDate(date);
-            }
-
             if (kudo.getOlderKudo() != null) {
                 updatedKudo.setOlderKudo(kudo.getOlderKudo());
             }
